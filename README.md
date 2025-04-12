@@ -1,1 +1,1 @@
-# eth_wallet
+# eth_wallet_project

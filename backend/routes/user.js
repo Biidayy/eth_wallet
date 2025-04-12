@@ -1,31 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const userController = require('../controllers/userController');
-const Transaction = require('../models/Transaction');
+// Import các hàm controller từ userController
+const {
+  createUser,
+  getAllUsers,
+  transferETH,
+  getTransactions,
+  getBalance,
+  deleteUser,
+} = require("../controllers/userController");
 
-// Tạo user
-router.post('/create', userController.createUser);
-
-// Lấy danh sách user
-router.get('/', userController.getAllUsers);
-
-// Xoá user
-router.delete('/:id', userController.deleteUser);
-
-// Chuyển ETH
-router.post('/transfer', userController.transferEth);
-
-// Lấy số dư
-router.get('/balance/:address', userController.getBalance);
-
-// Lấy lịch sử giao dịch
-router.get('/transactions', async (req, res) => {
-  try {
-    const txs = await Transaction.find().sort({ timestamp: -1 });
-    res.status(200).json(txs);
-  } catch (error) {
-    res.status(500).json({ message: 'Lỗi khi lấy giao dịch', error: error.message });
-  }
-});
-
+router.post("/create", createUser);                  
+router.get("/all", getAllUsers);                     
+router.post("/transfer", transferETH);               
+router.get("/transactions", getTransactions);      
+router.get("/balance/:address", getBalance);         
+router.delete("/:id", deleteUser);                  
+// Xuất router để sử dụng trong file index.js
 module.exports = router;
